@@ -1,4 +1,4 @@
-require 'core_ext/module/monitor'
+require 'core_ext/module/sniff'
 require 'facets/module/alias_method_chain' unless Module.methods.include?(:alias_method_chain)
 require 'facets/string/snakecase'
 
