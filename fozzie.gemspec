@@ -4,7 +4,7 @@ require "fozzie/version"
 
 Gem::Specification.new do |s|
   s.name        = "fozzie"
-  s.version     = Fozzie::VERSION
+  s.version     = Fozzie::Version.to_s
   s.authors     = ["Marc Watts"]
   s.email       = ["marc.watts@lonelyplanet.co.uk"]
   s.summary     = %q{Ruby gem from Lonely Planet Online to register statistics. Currently supports Statsd.}

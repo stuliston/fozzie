@@ -8,22 +8,19 @@
 # Rack and Rails middleware is avaliable to gather statistics on the processing time of Controller actions.
 #
 
+%w{
+  fozzie/configuration
+  fozzie/adapter
+  fozzie/bulk_dsl
+  fozzie/dsl
+  core_ext/module/sniff
+}.each(&method(:require))
+
+require 'fozzie/rack/middleware' if defined?(Rack)
+
+%w{fozzie/rails/middleware fozzie/railtie}.each(&method(:require)) if defined?(::Rails)
+
 module Fozzie
-
-  require 'core_ext/module/sniff'
-
-  require 'fozzie/adapter'
-
-  require "fozzie/exception"
-  require 'fozzie/configuration'
-  require "fozzie/dsl"
-  require "fozzie/bulk_dsl"
-  require "fozzie/version"
-
-  require "fozzie/rack/middleware"
-  require "fozzie/rails/middleware"
-
-  require 'fozzie/railtie' if defined?(::Rails)
 
   class << self
 

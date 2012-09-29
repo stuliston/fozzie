@@ -1,5 +1,3 @@
-require 'fozzie/adapter/statsd'
-
 module Fozzie
   module Interface
 

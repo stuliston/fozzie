@@ -1,3 +1,5 @@
+require 'fozzie/interface'
+
 module Fozzie
   class BulkDsl
     include Fozzie::Interface

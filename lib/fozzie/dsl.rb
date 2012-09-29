@@ -1,5 +1,4 @@
-require 'singleton'
-require "fozzie/interface"
+%w{singleton fozzie/interface}.each(&method(:require))
 
 module Fozzie
   class Dsl

@@ -1,4 +1,4 @@
-require 'socket'
+%w{socket timeout}.each(&method(:require))
 
 module Fozzie
   module Adapter

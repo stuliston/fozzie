@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'action_controller'
+require 'fozzie/rails/middleware'
 
 describe Fozzie::Rails::Middleware do
   let(:routes)  { mock "routes" }

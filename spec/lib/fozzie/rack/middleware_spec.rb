@@ -1,6 +1,7 @@
 require 'spec_helper'
 require 'sinatra/base'
 require 'rack/test'
+require 'fozzie/rack/middleware'
 
 describe Fozzie::Rack::Middleware do
 

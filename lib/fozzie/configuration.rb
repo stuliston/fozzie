@@ -1,19 +1,15 @@
-require 'yaml'
-require 'facets/hash/symbolize_keys'
-require 'sys/uname'
-require 'timeout'
+%w{yaml sys/uname facets/hash/symbolize_keys fozzie/exception}.each(&method(:require))
 
 module Fozzie
 
   # Fozzie configuration allows assignment of global properties
   # that will be used within the Fozzie codebase.
-
   class Configuration
     include Sys
     extend Forwardable
 
     def_delegators :adapter, :delimeter, :safe_separator
-    
+
     attr_accessor :env, :config_path, :host, :port, :appname, :namespaces,
       :timeout, :monitor_classes, :sniff_envs, :ignore_prefix, :prefix
 
