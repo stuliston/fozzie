@@ -226,7 +226,7 @@ Fozzie::Rails::Middleware will automatically be invoked on Rails initialization.
 configuration setting:
 
 ``` yaml
-    enable_middleware: false
+    enable_rails_middleware: false
 ```
 
 ## Bucket name prefixes

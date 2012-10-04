@@ -21,7 +21,7 @@ describe Fozzie::Configuration do
     c.port.should eq 9876
     c.appname.should eq 'fozzie'
     c.data_prefix.should eq "fozzie#{c.safe_separator}test"
-    c.enable_middleware.should be_false
+    c.enable_rails_middleware.should be_false
   end
 
   it "defaults env" do
@@ -38,8 +38,8 @@ describe Fozzie::Configuration do
     end
   end
 
-  describe "#enable_middleware" do
-    it("should default to enabled") { subject.enable_middleware.should be_true }
+  describe "#enable_rails_middleware" do
+    it("should default to enabled") { subject.enable_rails_middleware.should be_true }
   end
 
   describe "#disable_prefix" do

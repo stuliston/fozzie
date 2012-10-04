@@ -15,7 +15,7 @@ module Fozzie
     def_delegators :adapter, :delimeter, :safe_separator
     
     attr_accessor :env, :config_path, :host, :port, :appname, :namespaces,
-      :timeout, :monitor_classes, :sniff_envs, :ignore_prefix, :prefix, :enable_middleware
+      :timeout, :monitor_classes, :sniff_envs, :ignore_prefix, :prefix, :enable_rails_middleware
 
     def initialize(args = {})
       merge_and_assign_config(args)
@@ -90,7 +90,7 @@ module Fozzie
         :sniff_envs      => [:development, :staging, :production],
         :ignore_prefix   => false,
         :adapter         => :Statsd,
-        :enable_middleware => true
+        :enable_rails_middleware => true
       }.dup
     end
 
