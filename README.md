@@ -220,14 +220,7 @@ app = Rack::Builder.new {
 
 ### Rails
 
-Based on the Rack middleware above, but is more involved in its construction of the bucket value.
-
-Fozzie::Rails::Middleware will automatically be invoked on Rails initialization. It can be disabled with the following
-configuration setting:
-
-``` yaml
-    enable_rails_middleware: false
-```
+See [Fozzie Rails](http://github.com/lonelyplanet/fozzie_rails).
 
 ## Bucket name prefixes
 
@@ -265,10 +258,6 @@ Fozzie.logger = Logger.new 'log/fozzie.log'
 ```
 
 This may change, depending on feedback and more production experience.
-
-## Rails User Interface Performance Measuring
-
-If you also require UI metrics, you can also include the Mill script in the bottom of any page you would like to measure (see `resources/mill.js` and `resources/mill.min.js`) and you start receiving measurements on page performance.
 
 ## Credits
 
