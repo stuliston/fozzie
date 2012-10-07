@@ -13,9 +13,9 @@ module Fozzie
     extend Forwardable
 
     def_delegators :adapter, :delimeter, :safe_separator
-    
+
     attr_accessor :env, :config_path, :host, :port, :appname, :namespaces,
-      :timeout, :monitor_classes, :sniff_envs, :ignore_prefix, :prefix, :enable_rails_middleware
+      :timeout, :monitor_classes, :sniff_envs, :ignore_prefix, :prefix
 
     def initialize(args = {})
       merge_and_assign_config(args)
@@ -89,8 +89,7 @@ module Fozzie
         :monitor_classes => [],
         :sniff_envs      => [:development, :staging, :production],
         :ignore_prefix   => false,
-        :adapter         => :Statsd,
-        :enable_rails_middleware => true
+        :adapter         => :Statsd
       }.dup
     end
 

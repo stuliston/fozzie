@@ -1,3 +1,5 @@
+require 'fozzie'
+
 module Fozzie
   module Rack
 
