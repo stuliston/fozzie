@@ -204,7 +204,7 @@ Prefixes are cached on first use, therefore any changes to the Fozzie configure 
 
 ## Middleware
 
-To time and register the controller actions within your Rails application, Fozzie provides some middleware.
+To time and register the controller actions within your Rack and Rails application, Fozzie provides some middleware.
 
 ### Rack
 
