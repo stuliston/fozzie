@@ -88,7 +88,6 @@ describe Fozzie::Sniff do
     it "yields to a block when given" do
       subject.class_method_yielding_to_block {|val| val }.should eq :retval_from_block
     end
-
   end
 
   context 'instance methods' do
@@ -128,7 +127,5 @@ describe Fozzie::Sniff do
     it "yields to a block when given" do
       subject.method_yielding_to_block {|val| val }.should eq :retval_from_block
     end
-
   end
-
 end

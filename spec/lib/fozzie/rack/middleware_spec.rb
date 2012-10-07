@@ -1,7 +1,6 @@
 require 'spec_helper'
 require 'fozzie/rack/middleware'
 
-
 describe Fozzie::Rack::Middleware do
 
   subject do

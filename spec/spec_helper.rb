@@ -13,7 +13,6 @@ require 'fozzie'
 module Fozzie
   class Adapter::TestAdapter
     def register(*params); end
-    
     def delimeter; ""; end
     def safe_separator; ""; end
   end
@@ -25,5 +24,6 @@ Fozzie.configure do |config|
   config.adapter  = "TestAdapter"
 end
 
-
-
+RSpec.configure do |config|
+  config.order = :random
+end

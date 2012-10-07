@@ -210,7 +210,7 @@ To time and register the controller actions within your Rack and Rails applicati
 
 ``` ruby
 require 'rack'
-require 'fozzie'
+require 'fozzie/rack/middleware'
 
 app = Rack::Builder.new {
   use Fozzie::Rack::Middleware

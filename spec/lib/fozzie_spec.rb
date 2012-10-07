@@ -36,5 +36,4 @@ describe Fozzie do
       Kernel.const_defined?(k).should == true
     end
   end
-
 end
