@@ -21,7 +21,6 @@ describe Fozzie::Configuration do
     c.port.should eq 9876
     c.appname.should eq 'fozzie'
     c.data_prefix.should eq "fozzie#{c.safe_separator}test"
-    c.enable_rails_middleware.should be_false
   end
 
   it "defaults env" do
@@ -38,17 +37,13 @@ describe Fozzie::Configuration do
     end
   end
 
-  describe "#enable_rails_middleware" do
-    it("should default to enabled") { subject.enable_rails_middleware.should be_true }
-  end
-
   describe "#disable_prefix" do
     it "sets the data_prefix to nil" do
       subject.disable_prefix
       subject.data_prefix.should be_nil
     end
   end
-  
+
   describe "#prefix and #data_prefix" do
     it "creates a #data_prefix" do
       subject.stub(:origin_name => "")

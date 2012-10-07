@@ -19,11 +19,6 @@ module Fozzie
   require "fozzie/bulk_dsl"
   require "fozzie/version"
 
-  require "fozzie/rack/middleware"
-  require "fozzie/rails/middleware"
-
-  require 'fozzie/railtie' if defined?(::Rails)
-
   class << self
 
     # Shortcut for `Fozzie.config`

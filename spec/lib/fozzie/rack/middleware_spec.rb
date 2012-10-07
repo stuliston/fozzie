@@ -1,12 +1,12 @@
 require 'spec_helper'
-require 'sinatra/base'
-require 'rack/test'
+require 'fozzie/rack/middleware'
+
 
 describe Fozzie::Rack::Middleware do
 
   subject do
     unless defined?(RackApp)
-      RackApp = Class.new { def call(env); env end } 
+      RackApp = Class.new { def call(env); env end }
     end
     Fozzie::Rack::Middleware.new RackApp.new
   end
@@ -47,7 +47,6 @@ describe Fozzie::Rack::Middleware do
         subject.call(fake_env)
       end
     end
-
   end
 
   describe "#generate_key" do
@@ -67,35 +66,6 @@ describe Fozzie::Rack::Middleware do
       subject.generate_key(fake_env).should == 'somewhere.nice.render'
     end
 
-  end
-
-end
-
-describe "Sinatra Server with Middleware" do
-  include Rack::Test::Methods
-
-  def app
-    Sinatra.new do
-      set :environment, :test
-      use Fozzie::Rack::Middleware
-      get('/') { "echo" }
-      get('/somewhere/nice') { "echo" }
-    end
-  end
-
-  it "sends stats request on root" do
-    S.should_receive(:timing).with('index.render', anything, anything)
-    get '/'
-    last_response.should be_ok
-    last_response.body.should == 'echo'
-  end
-
-  it "sends stats request on nested path" do
-    S.should_receive(:timing).with('somewhere.nice.render', anything, anything)
-
-    get '/somewhere/nice'
-    last_response.should be_ok
-    last_response.body.should == 'echo'
   end
 
 end
