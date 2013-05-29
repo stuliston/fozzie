@@ -1,4 +1,5 @@
 require 'socket'
+require 'resolv'
 
 module Fozzie
   module Adapter
@@ -59,7 +60,7 @@ module Fozzie
       def send_to_socket(message)
         Fozzie.logger.debug {"Statsd: #{message}"} if Fozzie.logger
         Timeout.timeout(Fozzie.c.timeout) {
-          res = socket.send(message, 0, Fozzie.c.host, Fozzie.c.port)
+          res = socket.send(message, 0, host_ip, host_port)
           Fozzie.logger.debug {"Statsd sent: #{res}"} if Fozzie.logger
           (res.to_i == message.length)
         }
@@ -71,6 +72,14 @@ module Fozzie
       # The Socket we want to use to send data
       def socket
         @socket ||= ::UDPSocket.new
+      end
+
+      def host_ip
+        @host_ip ||= Resolv.getaddress(Fozzie.c.host)
+      end
+
+      def host_port
+        @host_port ||= Fozzie.c.port
       end
 
       def delimeter
