@@ -10,7 +10,7 @@ module Fozzie
       RESERVED_CHARS_REPLACEMENT = '_'
       DELIMETER                  = '.'
       SAFE_SEPARATOR             = '-'
-      TYPES                      = { :gauge => 'g', :count => 'c', :timing => 'ms' }
+      TYPES                      = { :gauge => 'g', :count => 'c', :timing => 'ms', :histogram => 'h' }
       BULK_DELIMETER             = "\n"
 
       # Send the statistic to the server

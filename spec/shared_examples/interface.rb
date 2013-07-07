@@ -157,4 +157,9 @@ shared_examples "interface" do
     val.should == 1
   end
 
+  it "#histogram" do
+    subject.should_receive(:send).with('mystat', 99, :histogram, 1)
+    subject.histogram('mystat', 99)
+  end
+
 end

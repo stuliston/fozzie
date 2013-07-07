@@ -24,6 +24,13 @@ module Fozzie
       send(stat, count, :count, sample_rate)
     end
 
+    # Registers a histogram value for the given stat, with an optional sample rate
+    #
+    # `Stats.histogram 'wat', 500`
+    def histogram(stat, value, sample_rate=1)
+      send(stat, value, :histogram, sample_rate)
+    end
+
     # Registers a timing (in ms) for the given stat, with an optional sample rate
     #
     # `Stats.timing 'wat', 500`
