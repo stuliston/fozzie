@@ -111,7 +111,7 @@ module Fozzie
     # Registers an increment on the result of the given boolean
     #
     # `Stats.increment_on 'wat', wat.random?`
-    def increment_on(stat, perf, sample_rate=1)
+    def increment_on(stat, perf, sample_rate = 1)
       key = [stat, (perf ? "success" : "fail")]
       increment(key, sample_rate)
       perf
@@ -149,15 +149,12 @@ module Fozzie
     #
     # Send data to the server via the socket
     def send_to_socket(payload)
-      Fozzie.log(:debug, "Fozzie: #{payload}")
-
       Timeout.timeout(Fozzie.c.timeout) {
         res = socket.send(payload, 0, Fozzie.c.host_ip, Fozzie.c.port)
-        Fozzie.log(:debug, "Statsd sent: #{res}")
         (res.to_i == payload.length)
       }
     rescue => exc
-      Fozzie.log(:warn, "Statsd Failure: #{exc.message}\n#{exc.backtrace}")
+      Fozzie.log(:warn, "#{exc.message rescue nil}\n#{exc.backtrace rescue nil}")
       false
     end
 
