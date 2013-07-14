@@ -45,7 +45,7 @@ module Fozzie
     end
 
     def to_s
-      ["#{bucket}:#{value}", type].compact.join('|')
+      ["#{bucket}:#{value}", type, sample_rate].compact.join('|')
     end
 
     def sampled?

@@ -101,7 +101,7 @@ describe Fozzie::Payload do
         { :bucket => %w{foo bar}, :value => 100, :type => :timing, :sample_rate => 1 }
       ]
 
-      described_class.bulk(stats).should eq("foo:1|c\nbar:1|g\nfoo.bar:100|ms")
+      described_class.bulk(stats).should eq("foo:1|c|@1\nbar:1|g|@1\nfoo.bar:100|ms|@1")
     end
   end
 
