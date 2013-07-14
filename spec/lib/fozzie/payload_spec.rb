@@ -74,8 +74,22 @@ describe Fozzie::Payload do
   end
 
   it "#sample_rate" do
-    subject.args = { :sample_rate => 5 }
-    subject.sample_rate.should eq("@5")
+    subject.args = { :sample_rate => 0.4 }
+    subject.sample_rate.should eq("@0.4")
+  end
+  
+  describe "#sampled?" do
+    
+    it "is true for value of 1" do
+      subject.args = { :sample_rate => 1 }
+      subject.sampled?.should be_true
+    end
+    
+    it "is false for value greater than 1" do
+      subject.args = { :sample_rate => 4 }
+      subject.sampled?.should be_true
+    end
+    
   end
 
   describe ".bulk" do

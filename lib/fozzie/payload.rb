@@ -45,11 +45,11 @@ module Fozzie
     end
 
     def to_s
-      ["#{bucket}:#{value}", type, (sampled? ? sample_rate : nil)].compact.join('|')
+      ["#{bucket}:#{value}", type].compact.join('|')
     end
 
     def sampled?
-      @sampled = (@args[:sample_rate].to_i < 1 and rand > @args[:sample_rate].to_i)
+      @sampled = (!(@args[:sample_rate] < 1) and !(rand > @args[:sample_rate]))
     end
     
     private
