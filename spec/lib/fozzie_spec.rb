@@ -26,6 +26,16 @@ describe Fozzie do
     end
   end
 
+  describe ".log" do
+
+    it "accepts level and message" do
+      log = mock('logger')
+      Fozzie.logger = log
+      log.should_receive(:send).with(:info, /foo$/)
+      Fozzie.log :info, "foo"
+    end
+  end
+
   it "has configuration" do
     Fozzie.config.should be_kind_of(Fozzie::Configuration)
     Fozzie.c.should be_kind_of(Fozzie::Configuration)

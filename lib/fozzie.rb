@@ -52,7 +52,7 @@ module Fozzie
     end
 
     def log(level, msg)
-      Fozzie.logger.send(level, "Fozzie: #{payload}") if Fozzie.logger
+      Fozzie.logger.send(level, "Fozzie: #{msg}") if Fozzie.logger
     end
 
   end
