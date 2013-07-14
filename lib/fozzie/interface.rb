@@ -1,4 +1,5 @@
-require 'fozzie/adapter/statsd'
+require "socket"
+require "fozzie/payload"
 
 module Fozzie
   module Interface
@@ -55,12 +56,7 @@ module Fozzie
       time(stat, sample_rate, &block)
     end
 
-    # Registers the time taken to complete a given block (in ms), with an optional sample rate
-    #
-    # `Stats.time_for 'wat' { # Do something, grrr... }`
-    def time_for(stat, sample_rate=1, &block)
-      time(stat, sample_rate, &block)
-    end
+    alias :time_for :time_to_do
 
     # Registers a commit
     #
@@ -152,8 +148,6 @@ module Fozzie
     #
     # Send data to the server via the socket
     def send_to_socket(payload)
-      puts "Send to socket #{payload}"
-
       Fozzie.log(:debug, "Fozzie: #{payload}")
 
       Timeout.timeout(Fozzie.c.timeout) {
@@ -162,7 +156,6 @@ module Fozzie
         (res.to_i == payload.length)
       }
     rescue => exc
-      puts "Statsd Failure: #{exc.message}\n#{exc.backtrace}" 
       Fozzie.log(:warn, "Statsd Failure: #{exc.message}\n#{exc.backtrace}")
       false
     end
