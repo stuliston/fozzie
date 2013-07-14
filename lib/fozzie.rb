@@ -50,11 +50,15 @@ module Fozzie
       @logger
     end
 
+    def log(level, msg)
+      Fozzie.logger.send(level, "Fozzie: #{payload}") if Fozzie.logger
+    end
+
   end
 
   # Loads each namespace for registering statistics
   self.c.namespaces.each do |klas|
-    Kernel.const_set(klas, Dsl.instance) unless const_defined?(klas)
+    Kernel.const_set(klas, Fozzie::DSL.instance) unless const_defined?(klas)
   end
 
 end
