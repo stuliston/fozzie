@@ -153,6 +153,11 @@ describe Fozzie::Interface do
     
     before(:each) { Fozzie.stub(:log) } # Quieten the logs
     
+    it "returns true for valid socket return value length" do
+      UDPSocket.any_instance.stub(:send).and_return('10')
+      subject.increment('foo').should eq(true)
+    end
+
     it "returns false for bad socket return value length" do
       UDPSocket.any_instance.stub(:send).and_return('3')
       subject.increment('foo').should eq(false)
