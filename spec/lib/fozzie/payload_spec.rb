@@ -9,6 +9,7 @@ describe Fozzie::Payload do
       subject.args = { foo: :bar }
       subject.args.should eq({foo: :bar })
     end
+
   end
 
   describe "#type" do
@@ -48,22 +49,22 @@ describe Fozzie::Payload do
 
     it "accepts String" do
       subject.args = { :bucket => "foo" } 
-      subject.bucket.should match(%r{.foo$})
+      subject.bucket.should match(%r{foo$})
     end
 
     it "accepts Array" do
       subject.args = { :bucket => [:foo, "bar"] } 
-      subject.bucket.should match(%r{.foo.bar$})
+      subject.bucket.should match(%r{foo.bar$})
     end
 
     it "converts values to lowercase" do
       subject.args = { :bucket => [:foo, "BAR"] } 
-      subject.bucket.should match(%r{.foo.bar$})
+      subject.bucket.should match(%r{foo.bar$})
     end
 
     it "removes reserved characters" do
       subject.args = { :bucket => "foo@bar" }
-      subject.bucket.should match(%r{.foo_bar})
+      subject.bucket.should match(%r{foo_bar})
     end
   end
 
@@ -73,8 +74,21 @@ describe Fozzie::Payload do
   end
 
   it "#sample_rate" do
-    subject.args = { :sample_rate => 1 }
-    subject.sample_rate.should eq("@1")
+    subject.args = { :sample_rate => 5 }
+    subject.sample_rate.should eq("@5")
+  end
+
+  describe ".bulk" do
+
+    it "collects stats together with delimeter" do
+      stats = [
+        { :bucket => 'foo', :value => 1, :type => :count, :sample_rate => 1 },
+        { :bucket => 'bar', :value => 1, :type => :gauge, :sample_rate => 1 },
+        { :bucket => %w{foo bar}, :value => 100, :type => :timing, :sample_rate => 1 }
+      ]
+
+      described_class.bulk(stats).should eq("foo:1|c\nbar:1|g\nfoo.bar:100|ms")
+    end
   end
 
   describe "#to_s" do
