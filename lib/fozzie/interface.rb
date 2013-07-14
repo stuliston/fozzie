@@ -1,5 +1,6 @@
 require "socket"
 require "fozzie/payload"
+require "timeout"
 
 module Fozzie
   module Interface
@@ -142,7 +143,7 @@ module Fozzie
         :type => type, 
         :sample_rate => sample_rate
       })
-      payload.sampled? ? send_to_socket(payload.to_s) : false
+      (payload.sampled? ? send_to_socket(payload.to_s) : false)
     end
 
     #
