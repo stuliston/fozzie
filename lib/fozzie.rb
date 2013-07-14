@@ -15,6 +15,7 @@ module Fozzie
   require "fozzie/interface"
   require "fozzie/bulk"
   require "fozzie/dsl"
+  require "fozzie/utils"
 
   class << self
 
