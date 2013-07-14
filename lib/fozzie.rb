@@ -9,15 +9,12 @@
 #
 module Fozzie
 
-  require 'core_ext/module/monitor'
-
-  require 'fozzie/adapter'
-
-  require "fozzie/exception"
-  require 'fozzie/configuration'
-  require "fozzie/dsl"
-  require "fozzie/bulk_dsl"
+  require "core_ext/module/monitor"
+  require "fozzie/configuration"
   require "fozzie/version"
+  require "fozzie/interface"
+  require "fozzie/bulk"
+  require "fozzie/dsl"
 
   class << self
 

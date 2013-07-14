@@ -12,25 +12,18 @@ module Fozzie
     include Sys
     extend Forwardable
 
-    def_delegators :adapter, :delimeter, :safe_separator
+    def_delegators :delimeter, :safe_separator
 
     attr_accessor :env, :config_path, :host, :port, :appname, :namespaces,
       :timeout, :monitor_classes, :sniff_envs, :ignore_prefix, :prefix
 
     def initialize(args = {})
       merge_and_assign_config(args)
-      self.adapter
       self.origin_name
     end
-
-    def adapter=(adapter)
-      @adapter = eval("Fozzie::Adapter::#{adapter}").new
-    rescue NoMethodError
-      raise AdapterMissing, "Adapter could not be found for given provider #{@provider}"
-    end
-
-    def adapter
-      @adapter || default_configuration[:adapter]
+    
+    def host_ip
+      @host_ip ||= Resolv.getaddress(Fozzie.c.host)
     end
 
     def disable_prefix
@@ -39,7 +32,7 @@ module Fozzie
 
     # Returns the prefix for any stat requested to be registered
     def data_prefix
-      return nil if @ignore_prefix
+      return nil #if @ignore_prefix
       return @data_prefix if @data_prefix
 
       escaped_prefix_with_dynamically_resolved_parts = prefix.map do |part|
@@ -88,8 +81,7 @@ module Fozzie
         :timeout         => 0.5,
         :monitor_classes => [],
         :sniff_envs      => [:development, :staging, :production],
-        :ignore_prefix   => false,
-        :adapter         => :Statsd
+        :ignore_prefix   => false
       }.dup
     end
 

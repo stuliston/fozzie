@@ -134,13 +134,42 @@ module Fozzie
     #    decrement 'wot'
     # end`
     def bulk(&block)
-      Fozzie::BulkDsl.new(&block)
+      Fozzie::Bulk.new(&block)
     end
 
     private
 
-    def adapter
-      Fozzie.c.adapter
+    def send(stat, value, type, sample_rate)
+      payload = Fozzie::Payload.new({ 
+        :bucket => stat, 
+        :value => value, 
+        :type => type, 
+        :sample_rate => sample_rate
+      })
+      payload.sampled? ? send_to_socket(payload.to_s) : false
+    end
+
+    #
+    # Send data to the server via the socket
+    def send_to_socket(payload)
+      puts "Send to socket #{payload}"
+
+      Fozzie.log(:debug, "Fozzie: #{payload}")
+
+      Timeout.timeout(Fozzie.c.timeout) {
+        res = socket.send(payload, 0, Fozzie.c.host_ip, Fozzie.c.port)
+        Fozzie.log(:debug, "Statsd sent: #{res}")
+        (res.to_i == payload.length)
+      }
+    rescue => exc
+      puts "Statsd Failure: #{exc.message}\n#{exc.backtrace}" 
+      Fozzie.log(:warn, "Statsd Failure: #{exc.message}\n#{exc.backtrace}")
+      false
+    end
+
+    # The Socket we want to use to send data
+    def socket
+      @socket ||= ::UDPSocket.new
     end
 
   end

@@ -1,1 +1,0 @@
-%w{statsd}.each {|r| require "fozzie/adapter/#{r}" }
