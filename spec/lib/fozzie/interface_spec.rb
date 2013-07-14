@@ -140,6 +140,15 @@ describe Fozzie::Interface do
     subject.histogram('mystat', 99)
   end
   
+  it "#bulk" do
+    Fozzie::Bulk.any_instance.should_receive(:send_to_socket).with("foo:1|c|@1\nfoo:-1|c|@1")
+
+    subject.bulk do
+      increment "foo"
+      decrement "foo"
+    end
+  end
+  
   context "exceptions" do
     
     before(:each) { Fozzie.stub(:log) } # Quieten the logs

@@ -131,7 +131,7 @@ module Fozzie
     #    decrement 'wot'
     # end`
     def bulk(&block)
-      Fozzie::Bulk.new(&block)
+      Fozzie::Bulk.new(&block).commit
     end
 
     private
