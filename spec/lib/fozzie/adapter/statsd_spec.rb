@@ -13,7 +13,7 @@ module Fozzie::Adapter
     after(:all) do
       Fozzie.c.adapter = :TestAdapter
     end
-    
+
     it "downcases any stat value" do
       subject.should_receive(:send_to_socket).with {|bin| bin.match /\.foo/ }
 
