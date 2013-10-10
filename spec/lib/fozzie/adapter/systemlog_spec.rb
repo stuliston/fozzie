@@ -4,18 +4,18 @@ require "fozzie/adapter/systemLog"
 module Fozzie
   module Adapter
 
+    class StubSyslog
+      def self.open(*whatevs)
+        yield self
+      end
+
+      def notice(message)
+        # swallow
+      end
+    end
+
     describe SystemLog do
       it_behaves_like "fozzie adapter"
-
-      class StubSyslog
-        def self.open(*whatevs)
-          yield self
-        end
-
-        def notice(message)
-          # swallow
-        end
-      end
 
       describe "#register" do
 
