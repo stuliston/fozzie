@@ -8,7 +8,7 @@ module Fozzie
       attr_accessor :target_log
 
       def initialize
-        target_log = Syslog
+        @target_log = Syslog
       end
 
       def register(*stats)
