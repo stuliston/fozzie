@@ -1,1 +1,1 @@
-%w{statsd}.each {|r| require "fozzie/adapter/#{r}" }
+%w{statsd systemlog}.each {|r| require "fozzie/adapter/#{r}" }
