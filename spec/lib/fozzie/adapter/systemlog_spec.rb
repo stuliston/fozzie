@@ -23,7 +23,7 @@ module Fozzie
 
         it "sends the stats to the SystemLog" do
           stat = { bin: "FOO", value: 1, type: :gauge }
-          message = "fozzie: [notice] {\"bin\":\"FOO\",\"value\":1,\"type\":\"gauge\"}\n"
+          message = "{'bin':'FOO','value':1,'type':'gauge'}\n"
 
           subject.target_log.should_receive(:notice).with(message)
 
