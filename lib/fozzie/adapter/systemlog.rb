@@ -35,8 +35,12 @@ module Fozzie
 
       def send_to_log(message, severity = :notice)
         target_log.open($0, Syslog::LOG_PID | Syslog::LOG_CONS) do |log|
-          log.send(severity, "{'bin':'FOO','value':1,'type':'gauge'}\n")
+          log.send(severity, format(message, severity))
         end
+      end
+
+      def format(message, severity)
+        "fozzie: [#{severity}] #{message.strip}\n"
       end
 
     end
