@@ -10,7 +10,7 @@ module Fozzie
       def initialize
         @target_log = Logger.new('/var/log/fozzie.log')
         @target_log.formatter = proc do |severity, datetime, progname, msg|
-          "datetime=#{datetime},#{msg}\n"
+          msg
         end
       end
 
