@@ -1,5 +1,4 @@
-require 'syslog'
-require 'json'
+require "logger"
 
 module Fozzie
   module Adapter
@@ -9,14 +8,18 @@ module Fozzie
       attr_accessor :target_log
 
       def initialize
-        @target_log = Syslog
+        @target_log = Logger.new('/var/log/fozzie.log')
+        @target_log.formatter = proc do |severity, datetime, progname, msg|
+          "datetime=#{datetime},#{msg}\n"
+        end
       end
 
       def register(*stats)
         metrics = stats.flatten.collect do |stat|
-          convert_to_json(stat)
-        end.compact.join('|')
-        send_to_log(metrics)
+          format(stat)
+        end.compact.join("\n")
+
+        target_log.info(metrics)
       end
 
       def delimeter
@@ -29,18 +32,8 @@ module Fozzie
 
       private
 
-      def convert_to_json(stat)
-        JSON.fast_generate(stat)
-      end
-
-      def send_to_log(message, severity = :notice)
-        target_log.open($0, Syslog::LOG_PID | Syslog::LOG_CONS) do |log|
-          log.send(severity, format(message, severity))
-        end
-      end
-
-      def format(message, severity)
-        "fozzie: [#{severity}] #{message.strip}\n"
+      def format(stat)
+        stat.map{|k,v| "#{k}=#{v}"}.join(',')
       end
 
     end

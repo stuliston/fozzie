@@ -4,7 +4,7 @@ require "fozzie/adapter/systemLog"
 module Fozzie
   module Adapter
 
-    class StubSyslog
+    class Stublog
       def self.open(*whatevs)
         yield self
       end
@@ -19,13 +19,12 @@ module Fozzie
 
       describe "#register" do
 
-        before { subject.target_log = StubSyslog }
+        before { subject.target_log = Stublog }
 
         it "sends the stats to the SystemLog" do
           stat = { bin: "FOO", value: 1, type: :gauge }
-          message = "fozzie: [notice] {\"bin\":\"FOO\",\"value\":1,\"type\":\"gauge\"}\n"
 
-          subject.target_log.should_receive(:notice).with(message)
+          subject.target_log.should_receive(:info).with("bin=FOO,value=1,type=gauge")
 
           subject.register(stat)
         end
