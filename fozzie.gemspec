@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'sys-uname'
   s.add_dependency 'facets'
+  s.add_dependency 'logstash-event', '~> 1.2'
 
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec'
