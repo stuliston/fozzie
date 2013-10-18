@@ -7,17 +7,37 @@ module Fozzie
 
     class Logstash
 
+      RESERVED_CHARS_REGEX       = /[\:\|\@\s]/
+      RESERVED_CHARS_REPLACEMENT = '_'
+      DELIMETER                  = '.'
+      SAFE_SEPARATOR             = '-'
+      BULK_DELIMETER             = "\n"
+
       def register(*stats)
-        metrics = stats.collect(&:to_json).join("\n")
+        metrics = stats.flatten.collect do |stat|
+          next if sampled?(stat[:sample_rate])
+
+          stat.merge(bin: format_bucket(stat[:bin])).to_json
+        end.compact.join(BULK_DELIMETER)
+
         send_to_socket(metrics)
       end
 
-      def delimeter
-        raise NotImplementedException
+      def format_bucket(stat)
+        bucket = [stat].flatten.compact.collect(&:to_s).join(DELIMETER).downcase
+        bucket = bucket.gsub('::', DELIMETER).gsub(RESERVED_CHARS_REGEX, RESERVED_CHARS_REPLACEMENT)
+        bucket = [Fozzie.c.data_prefix, bucket].compact.join(DELIMETER)
+
+        bucket
       end
 
-      def safe_separator
-        raise NotImplementedException
+      # If the statistic is sampled, generate a condition to check if it's good to send
+      def sampled(sample_rate)
+        yield unless sampled?(sample_rate)
+      end
+
+      def sampled?(sample_rate)
+        sample_rate < 1 and rand > sample_rate
       end
 
       private
@@ -46,6 +66,14 @@ module Fozzie
 
       def host_port
         @host_port ||= Fozzie.c.port
+      end
+
+      def delimeter
+        DELIMETER
+      end
+
+      def safe_separator
+        SAFE_SEPARATOR
       end
 
     end

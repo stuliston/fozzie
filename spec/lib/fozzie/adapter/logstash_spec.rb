@@ -19,10 +19,32 @@ module Fozzie
         Fozzie.c.port = 8125
       end
 
-      it 'works' do
-        subject.should_receive(:send_to_socket).with("{\"bin\":\"FOO\",\"value\":1,\"type\":\"gauge\",\"sample_rate\":1}")
-        subject.register(bin: "FOO", value: 1, type: :gauge, sample_rate: 1)
-        subject.register(bin: "FOO", value: 202, type: :timer, sample_rate: 1)
+      describe "#register" do
+
+        it 'sends the formatted message to the socket' do
+          # TODO: Make host name configurable (stu.local)
+          expected_message = "{\"bin\":\"stu-local.test.foo\",\"value\":1,\"type\":\"gauge\",\"sample_rate\":1}"
+          subject.should_receive(:send_to_socket).with(expected_message)
+          subject.register(bin: "FOO", value: 1, type: :gauge, sample_rate: 1)
+        end
+      end
+
+      describe "#format_bucket" do
+        it "accepts arrays" do
+          subject.format_bucket([:foo, '2']).should match /foo.2$/
+          subject.format_bucket([:foo, '2']).should match /foo.2$/
+          subject.format_bucket(%w{foo bar}).should match /foo.bar$/
+        end
+
+        it "converts any values to strings for stat value, ignoring nil" do
+          subject.format_bucket([:foo, 1, nil, "@", "BAR"]).should =~ /foo.1._.bar/
+        end
+
+        it "replaces invalid chracters" do
+          subject.format_bucket([:foo, ':']).should match /foo.#{subject.class::RESERVED_CHARS_REPLACEMENT}$/
+          subject.format_bucket([:foo, '@']).should match /foo.#{subject.class::RESERVED_CHARS_REPLACEMENT}$/
+          subject.format_bucket('foo.bar.|').should match /foo.bar.#{subject.class::RESERVED_CHARS_REPLACEMENT}$/
+        end
       end
 
     end
