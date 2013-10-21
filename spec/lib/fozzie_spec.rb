@@ -15,7 +15,7 @@ describe Fozzie do
     before do
       @old_logger = Fozzie.logger
     end
-    
+
     it "assigns a logger" do
       Fozzie.logger = logger
       Fozzie.logger.should eq logger
