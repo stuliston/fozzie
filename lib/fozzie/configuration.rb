@@ -34,6 +34,7 @@ module Fozzie
       @ignore_prefix = true
     end
 
+    # TODO: Extract this into an object
     # Returns the prefix for any stat requested to be registered
     def data_prefix
       return nil if @ignore_prefix
