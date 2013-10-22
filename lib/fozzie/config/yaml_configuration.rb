@@ -1,33 +1,33 @@
+require 'fozzie/environment'
 require 'facets/hash/symbolize_keys'
 require 'yaml'
 
 module Fozzie
   class YamlConfiguration
 
-    def initialize(args = {})
-      @config_path = args[:config_path] || ''
-      @environment = args[:environment]
+    def initialize(path = nil)
+      @path = path || default_path
     end
 
     def settings
-      return {} unless File.exists?(full_config_path)
+      return {} unless File.exists?(full_path)
       environment_settings.symbolize_keys
     end
 
     private
 
-    attr_reader :config_path
+    attr_reader :path
+
+    def default_path
+      'config/fozzie.yml'
+    end
 
     def environment_settings
-      YAML.load(File.open(full_config_path))[environment]
+      YAML.load(File.open(full_path))[Environment.current]
     end
 
-    def full_config_path
-      File.expand_path('config/fozzie.yml', config_path)
-    end
-
-    def environment
-      (@environment || ENV['RACK_ENV'] || ENV['RAILS_ENV'] || 'development')
+    def full_path
+      File.expand_path(path)
     end
 
   end
