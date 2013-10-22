@@ -73,7 +73,7 @@ module Fozzie
     end
 
     it "handles missing configuration namespace" do
-      proc { Configuration.new({env: 'blbala', config_path: './spec/config/fozzie.yml'}) }.should_not raise_error
+      proc { Configuration.new({config_path: './spec/config/fozzie.yml'}) }.should_not raise_error
     end
 
     describe "#namespaces" do

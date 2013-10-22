@@ -14,12 +14,11 @@ module Fozzie
   class Configuration
     include Sys
 
-    attr_accessor :env, :config_path, :host, :port, :appname, :namespaces,
+    attr_accessor :config_path, :host, :port, :appname, :namespaces,
       :timeout, :monitor_classes, :sniff_envs, :ignore_prefix, :prefix
 
     def initialize(args = {})
       @args = args
-      @env = Environment.current
       assign_settings!
     end
 
@@ -62,6 +61,10 @@ module Fozzie
 
     def sniff?
       sniff_envs.collect(&:to_sym).include?(env.to_sym)
+    end
+
+    def env
+      Environment.current
     end
 
     private
