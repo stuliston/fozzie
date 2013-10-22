@@ -2,7 +2,7 @@ module Fozzie
   class MergedConfiguration
 
     def initialize(*configs)
-      @configs = configs || [ DefaultConfiguration.new, YamlConfiguration.new]
+      @configs = configs || [ DefaultConfiguration.new, YamlConfiguration.new ]
     end
 
     def settings

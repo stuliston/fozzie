@@ -5,7 +5,7 @@ module Fozzie
   describe YamlConfiguration do
     it_behaves_like 'a fozzie configuration file'
 
-    let(:configuration_file) do
+    let(:yaml_configuration) do
       YamlConfiguration.new(
         config_path: config_path,
         environment: 'test'
@@ -18,7 +18,7 @@ module Fozzie
         let(:config_path) { 'clearly/made/up/path' }
 
         it 'is empty' do
-          expect(configuration_file.settings).to eq({})
+          expect(yaml_configuration.settings).to eq({})
         end
       end
 
@@ -32,7 +32,7 @@ module Fozzie
             host: "1.1.1.1",
             port: 9876
           }
-          expect(configuration_file.settings).to eq(settings)
+          expect(yaml_configuration.settings).to eq(settings)
         end
       end
     end
