@@ -1,8 +1,6 @@
 require 'fozzie/environment'
 require 'fozzie/config/default_configuration'
 require 'fozzie/config/yaml_configuration'
-require 'yaml'
-require 'facets/hash/symbolize_keys'
 require 'sys/uname'
 require 'timeout'
 
