@@ -74,6 +74,8 @@ module Fozzie
         @socket ||= ::UDPSocket.new
       end
 
+      private
+
       def host_ip
         @host_ip ||= Resolv.getaddress(Fozzie.c.host)
       end
@@ -82,13 +84,6 @@ module Fozzie
         @host_port ||= Fozzie.c.port
       end
 
-      def delimeter
-        DELIMETER
-      end
-
-      def safe_separator
-        SAFE_SEPARATOR
-      end
     end
 
   end

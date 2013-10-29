@@ -9,8 +9,6 @@ module Fozzie
 
       RESERVED_CHARS_REGEX       = /[\:\|\@\s]/
       RESERVED_CHARS_REPLACEMENT = '_'
-      DELIMETER                  = '.'
-      SAFE_SEPARATOR             = '-'
       BULK_DELIMETER             = "\n"
 
       def register(*stats)
@@ -24,9 +22,9 @@ module Fozzie
       end
 
       def format_bucket(stat)
-        bucket = [stat].flatten.compact.collect(&:to_s).join(DELIMETER).downcase
-        bucket = bucket.gsub('::', DELIMETER).gsub(RESERVED_CHARS_REGEX, RESERVED_CHARS_REPLACEMENT)
-        bucket = [Fozzie.c.data_prefix, bucket].compact.join(DELIMETER)
+        bucket = [stat].flatten.compact.collect(&:to_s).join(delimeter).downcase
+        bucket = bucket.gsub('::', delimeter).gsub(RESERVED_CHARS_REGEX, RESERVED_CHARS_REPLACEMENT)
+        bucket = [Fozzie.c.data_prefix, bucket].compact.join(delimeter)
 
         bucket
       end
@@ -69,11 +67,7 @@ module Fozzie
       end
 
       def delimeter
-        DELIMETER
-      end
-
-      def safe_separator
-        SAFE_SEPARATOR
+        Fozzie.c.delimeter
       end
 
     end

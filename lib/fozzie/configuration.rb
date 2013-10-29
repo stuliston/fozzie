@@ -66,6 +66,16 @@ module Fozzie
       Environment.current
     end
 
+    # TODO: Make this config keyed under adapter
+    def delimeter
+      '.'
+    end
+
+    # TODO: Make this config keyed under adapter
+    def safe_separator
+      '-'
+    end
+
     private
 
     attr_reader :args
@@ -96,16 +106,6 @@ module Fozzie
 
     def yaml_configuration
       YamlConfiguration.new(args[:config_path])
-    end
-
-    # TODO: Make this config keyed under adapter
-    def delimeter
-      '.'
-    end
-
-    # TODO: Make this config keyed under adapter
-    def safe_separator
-      '-'
     end
 
   end
