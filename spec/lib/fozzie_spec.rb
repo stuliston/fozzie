@@ -4,8 +4,8 @@ require 'logger'
 describe Fozzie do
   it "allows dynamic assignment" do
     { :host => 'somewhere.local', :port => 99 }.each do |field, val|
-      Fozzie.configure {|c| c.send("#{field}=", val) }
-      Fozzie.c.send(field).should == val
+      Fozzie.configure {|c| c.public_send("#{field}=", val) }
+      Fozzie.c.public_send(field).should == val
     end
   end
 
